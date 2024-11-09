@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-project-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-project
+  template:
+    metadata:
+      labels:
+        app: node-project
+    spec:
+      containers:
+        - name: node-project-container
+          image: arun662/node-project:latest  # Updated DockerHub image
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"

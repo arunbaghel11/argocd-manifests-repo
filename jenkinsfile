@@ -1,0 +1,26 @@
+// Jenkinsfile.cd
+pipeline {
+    agent any
+    environment {
+        ARGOCD_APP = 'node-project'               // ArgoCD application name
+        ARGOCD_SERVER = 'localhost:8090'           // ArgoCD server URL (custom port 8090)
+        ARGOCD_USERNAME = 'admin'                  // Your ArgoCD username
+        ARGOCD_PASSWORD = 'arunbaghel12'  // Replace with your ArgoCD password
+    }
+    stages {
+        stage('Login to ArgoCD') {
+            steps {
+                sh '''
+                argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+                '''
+            }
+        }
+        stage('Sync with ArgoCD') {
+            steps {
+                sh '''
+                argocd app sync $ARGOCD_APP
+                '''
+            }
+        }
+    }
+}
